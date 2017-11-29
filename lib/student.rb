@@ -48,7 +48,11 @@ class Student
       LIMIT 1
     SQL
     result = DB[:conn].execute(sql, name).first
-    student = self.new(result[0],result[1],result[2])
+    student = self.new_from_db(result)
+  end
+
+  def self.new_from_db(row)
+    new_student = self.new(row[0],row[1],row[2])
   end
 
   def self.create_table
