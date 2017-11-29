@@ -40,6 +40,17 @@ class Student
     student
   end
 
+  def self.find_by_name(name)
+    sql = <<-SQL
+      SELECT *
+      FROM students
+      WHERE name = ?
+      LIMIT 1
+    SQL
+    result = DB[:conn].execute(sql, name).first
+    student = self.new(result[0],result[1],result[2])
+  end
+
   def self.create_table
     sql = <<-SQL
       CREATE TABLE IF NOT EXISTS students (
